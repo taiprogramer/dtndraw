@@ -34,7 +34,10 @@
     // Listen touch events of finger on mobile
     var svg = document.getElementsByTagName("svg")[0];
     svg.addEventListener("touchstart", function (e) {
-
+        var circle = createCircle();
+        circle.setAttribute("cx", e.touches[0].clientX);
+        circle.setAttribute("cy", e.touches[0].clientY);
+        svg.appendChild(circle);
     });
 
     svg.addEventListener("touchmove", function (e) {
@@ -47,7 +50,10 @@
 
     // Listen move events of mouse on desktop
     svg.addEventListener("mousedown", function (e) {
-
+        var circle = createCircle();
+        circle.setAttribute("cx", e.clientX);
+        circle.setAttribute("cy", e.clientY);
+        svg.appendChild(circle);
     });
 
     svg.addEventListener("mousemove", function (e) {
