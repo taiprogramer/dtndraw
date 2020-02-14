@@ -31,49 +31,81 @@
 </body>
 
 <script>
-    // Listen touch events of finger on mobile
     var svg = document.getElementsByTagName("svg")[0];
+    var drawing = false;
+    var currentCursorPosition = { x: 0, y: 0 };
+
+    // Listen touch events of finger on mobile
     svg.addEventListener("touchstart", function (e) {
+        drawing = true;
         var circle = createCircle();
-        circle.setAttribute("cx", e.touches[0].clientX);
-        circle.setAttribute("cy", e.touches[0].clientY);
+        currentCursorPosition.x = e.touches[0].clientX;
+        currentCursorPosition.y = e.touches[0].clientY;
+        circle.setAttribute("cx", currentCursorPosition.x);
+        circle.setAttribute("cy", currentCursorPosition.y);
         svg.appendChild(circle);
     });
 
     svg.addEventListener("touchmove", function (e) {
-
+        if (drawing === true) {
+            var line = createLine();
+            var oldCursorX = currentCursorPosition.x;
+            var oldCursorY = currentCursorPosition.y;
+            currentCursorPosition.x = e.touches[0].clientX;
+            currentCursorPosition.y = e.touches[0].clientY;
+            line.setAttribute("x1", oldCursorX);
+            line.setAttribute("y1", oldCursorY);
+            line.setAttribute("x2", currentCursorPosition.x);
+            line.setAttribute("y2", currentCursorPosition.y);
+            svg.appendChild(line);
+        }
     });
 
     svg.addEventListener("touchend", function (e) {
-
+        drawing = false;
     });
 
     // Listen move events of mouse on desktop
     svg.addEventListener("mousedown", function (e) {
+        drawing = true;
         var circle = createCircle();
-        circle.setAttribute("cx", e.clientX);
-        circle.setAttribute("cy", e.clientY);
+        currentCursorPosition.x = e.clientX;
+        currentCursorPosition.y = e.clientY;
+        circle.setAttribute("cx", currentCursorPosition.x);
+        circle.setAttribute("cy", currentCursorPosition.y);
         svg.appendChild(circle);
     });
 
     svg.addEventListener("mousemove", function (e) {
+        if (drawing === true) {
+            var line = createLine();
+            var oldCursorX = currentCursorPosition.x;
+            var oldCursorY = currentCursorPosition.y;
+            currentCursorPosition.x = e.clientX;
+            currentCursorPosition.y = e.clientY;
+            line.setAttribute("x1", oldCursorX);
+            line.setAttribute("y1", oldCursorY);
+            line.setAttribute("x2", currentCursorPosition.x);
+            line.setAttribute("y2", currentCursorPosition.y);
+            svg.appendChild(line);
+        }
     });
 
     svg.addEventListener("mouseup", function (e) {
-
+        drawing = false;
     });
 
     function createCircle() {
         var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute("fill", "#FFFFFF");
-        circle.setAttribute("r", 3);
+        circle.setAttribute("r", 1);
         return circle;
     }
 
     function createLine() {
         var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute("stroke", "#FFFFFF");
-        line.setAttribute("strokeWidth", 6);
+        line.setAttribute("stroke-width", 2);
         return line;
     }
 
