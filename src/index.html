@@ -34,29 +34,21 @@
     var svg = document.getElementsByTagName("svg")[0];
     var drawing = false;
     var currentCursorPosition = { x: 0, y: 0 };
+    var oldCursorPosition = { x: 0, y: 0 };
 
     // Listen touch events of finger on mobile
     svg.addEventListener("touchstart", function (e) {
         drawing = true;
+        setCurrentCursorPosition(e);
         var circle = createCircle();
-        currentCursorPosition.x = e.touches[0].clientX;
-        currentCursorPosition.y = e.touches[0].clientY;
-        circle.setAttribute("cx", currentCursorPosition.x);
-        circle.setAttribute("cy", currentCursorPosition.y);
         svg.appendChild(circle);
     });
 
     svg.addEventListener("touchmove", function (e) {
         if (drawing === true) {
+            setOldCursorPosition();
+            setCurrentCursorPosition(e);
             var line = createLine();
-            var oldCursorX = currentCursorPosition.x;
-            var oldCursorY = currentCursorPosition.y;
-            currentCursorPosition.x = e.touches[0].clientX;
-            currentCursorPosition.y = e.touches[0].clientY;
-            line.setAttribute("x1", oldCursorX);
-            line.setAttribute("y1", oldCursorY);
-            line.setAttribute("x2", currentCursorPosition.x);
-            line.setAttribute("y2", currentCursorPosition.y);
             svg.appendChild(line);
         }
     });
@@ -68,25 +60,16 @@
     // Listen move events of mouse on desktop
     svg.addEventListener("mousedown", function (e) {
         drawing = true;
+        setCurrentCursorPosition(e);
         var circle = createCircle();
-        currentCursorPosition.x = e.clientX;
-        currentCursorPosition.y = e.clientY;
-        circle.setAttribute("cx", currentCursorPosition.x);
-        circle.setAttribute("cy", currentCursorPosition.y);
         svg.appendChild(circle);
     });
 
     svg.addEventListener("mousemove", function (e) {
         if (drawing === true) {
+            setOldCursorPosition();
+            setCurrentCursorPosition(e);
             var line = createLine();
-            var oldCursorX = currentCursorPosition.x;
-            var oldCursorY = currentCursorPosition.y;
-            currentCursorPosition.x = e.clientX;
-            currentCursorPosition.y = e.clientY;
-            line.setAttribute("x1", oldCursorX);
-            line.setAttribute("y1", oldCursorY);
-            line.setAttribute("x2", currentCursorPosition.x);
-            line.setAttribute("y2", currentCursorPosition.y);
             svg.appendChild(line);
         }
     });
@@ -99,6 +82,8 @@
         var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute("fill", "#FFFFFF");
         circle.setAttribute("r", 1);
+        circle.setAttribute("cx", currentCursorPosition.x);
+        circle.setAttribute("cy", currentCursorPosition.y);
         return circle;
     }
 
@@ -106,7 +91,27 @@
         var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute("stroke", "#FFFFFF");
         line.setAttribute("stroke-width", 2);
+        line.setAttribute("x1", oldCursorPosition.x);
+        line.setAttribute("y1", oldCursorPosition.y);
+        line.setAttribute("x2", currentCursorPosition.x);
+        line.setAttribute("y2", currentCursorPosition.y);
         return line;
+    }
+
+    function setCurrentCursorPosition(e) {
+        if (e.touches !== undefined) {
+            currentCursorPosition.x = e.touches[0].clientX;
+            currentCursorPosition.y = e.touches[0].clientY;
+            return;
+        }
+
+        currentCursorPosition.x = e.clientX;
+        currentCursorPosition.y = e.clientY;
+    }
+
+    function setOldCursorPosition() {
+        oldCursorPosition.x = currentCursorPosition.x;
+        oldCursorPosition.y = currentCursorPosition.y;
     }
 
 </script>
