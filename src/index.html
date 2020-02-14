@@ -56,6 +56,19 @@
     svg.addEventListener("mouseup", function (e) {
 
     });
+
+    function createCircle() {
+        var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute("fill", "#FFFFFF");
+        return circle;
+    }
+
+    function createLine() {
+        var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute("stroke", "#FFFFFF");
+        return line;
+    }
+
 </script>
 
 </html>
