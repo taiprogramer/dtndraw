@@ -125,6 +125,28 @@
                     }
                     break;
                 }
+                case "g": {
+                    var xmlSerializer = new XMLSerializer();
+                    var svgXMLstr = xmlSerializer.serializeToString(svg);
+                    var canvas = document.createElement("canvas");
+                    var rect = svg.getBoundingClientRect();
+                    canvas.width = rect.width;
+                    canvas.height = rect.height;
+                    var ctx = canvas.getContext("2d");
+                    ctx.rect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = "black";
+                    ctx.fill();
+                    var image = new Image();
+                    image.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgXMLstr);
+                    image.onload = function () {
+                        ctx.drawImage(image, 0, 0);
+                        var dataURL = canvas.toDataURL("image/png").replace("image/png", "octet-stream");
+                        var a = document.createElement("a");
+                        a.setAttribute("download", "dtndraw.png");
+                        a.setAttribute("href", dataURL);
+                        a.click();
+                    }
+                }
             }
         }
     });
