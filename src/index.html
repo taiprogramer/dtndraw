@@ -114,6 +114,21 @@
         oldCursorPosition.y = currentCursorPosition.y;
     }
 
+    // handle shortcut
+    document.addEventListener("keydown", function (e) {
+        if (e.altKey === true) {
+            switch (e.key) {
+                case "c": {
+                    // erase everything
+                    while (svg.lastChild) {
+                        svg.removeChild(svg.lastChild);
+                    }
+                    break;
+                }
+            }
+        }
+    });
+
 </script>
 
 </html>
