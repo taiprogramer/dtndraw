@@ -15,3 +15,46 @@ svg {
     width: 100vw;
     height: 100vh;
 }
+
+.b-help-panel {
+    --foreground-color: yellow;
+    --border-color: gray;
+    --color-on-hover: teal;
+    list-style-type: none;
+    position: fixed;
+    left: 0em;
+    bottom: 0em;
+    display: flex;
+    flex-direction: row;
+}
+
+.b-help-panel li {
+    width: 2.85em;
+    height: 2.70em;
+    border-top: .15em solid var(--border-color);
+    border-bottom: .15em solid var(--border-color);
+    border-right: .15em solid var(--border-color);
+    color: var(--foreground-color);
+    font-weight: bold;
+    /* Make text center */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.b-help-panel li:hover {
+    background-color: var(--color-on-hover);
+}
+
+.b-help-panel li .tooltip {
+    visibility: hidden;
+    position: fixed;
+    bottom: 1em;
+    left: 13em;
+}
+
+.b-help-panel li:hover .tooltip {
+    visibility: visible;
+}
