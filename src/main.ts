@@ -130,7 +130,6 @@ class HelpPanel {
 
     toggle() {
         let visibility: string = this.root.style.visibility;
-        console.log(visibility);
         if (visibility === "visible" || visibility === "") {
             this.root.style.visibility = "hidden";
             return;

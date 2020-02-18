@@ -121,7 +121,6 @@ var HelpPanel = /** @class */ (function () {
     }
     HelpPanel.prototype.toggle = function () {
         var visibility = this.root.style.visibility;
-        console.log(visibility);
         if (visibility === "visible" || visibility === "") {
             this.root.style.visibility = "hidden";
             return;
