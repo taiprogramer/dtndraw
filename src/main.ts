@@ -36,8 +36,8 @@ class Line {
 
 class SVG {
     root: SVGElement;
-    constructor(svg: SVGElement) {
-        this.root = svg;
+    constructor() {
+        this.root = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     }
 
     draw(obj: Drawable) {
@@ -98,7 +98,76 @@ class SVG {
     }
 }
 
-const svg: SVG = new SVG(document.getElementsByTagName("svg")[0]);
+interface Shortcut {
+    name: string;
+    description: string;
+}
+
+class HelpPanel {
+    root: HTMLUListElement;
+    shortcuts: Array<Shortcut>;
+    items: Array<HTMLLIElement>
+    constructor() {
+        this.root = document.createElement("ul");
+        this.shortcuts = new Array<Shortcut>();
+        this.items = new Array<HTMLLIElement>();
+        this.root.classList.add("b-help-panel");
+        this.shortcuts.push({ name: "C", description: "Alt + c: Erase everything (Clear)" });
+        this.shortcuts.push({ name: "G", description: "Alt + g: Download image (Get)" });
+        this.shortcuts.push({ name: "/", description: "Alt + /: Toggle this help" });
+        this.shortcuts.forEach(shortcut => {
+            const li: HTMLLIElement = document.createElement("li");
+            li.textContent = shortcut.name;
+            this.items.push(li);
+            const div: HTMLDivElement = document.createElement("div");
+            div.textContent = shortcut.description;
+            div.classList.add("tooltip");
+            li.appendChild(div);
+            this.root.appendChild(li);
+            this.addEventListenerForItems();
+        });
+    }
+
+    toggle() {
+        let visibility: string = this.root.style.visibility;
+        console.log(visibility);
+        if (visibility === "visible" || visibility === "") {
+            this.root.style.visibility = "hidden";
+            return;
+        }
+        if (visibility === "hidden") {
+            this.root.style.visibility = "visible";
+        }
+
+    }
+
+    addEventListenerForItems() {
+        this.items.forEach(item => {
+            item.onclick = (e) => {
+                switch (item.textContent.charAt(0)) {
+                    case "C": {
+                        const evt = new KeyboardEvent("keydown", { key: "c", altKey: true });
+                        document.dispatchEvent(evt);
+                        break;
+                    }
+                    case "G": {
+                        const evt = new KeyboardEvent("keydown", { key: "g", altKey: true });
+                        document.dispatchEvent(evt);
+                        break;
+                    }
+                    case "/": {
+                        const evt = new KeyboardEvent("keydown", { key: "/", altKey: true });
+                        document.dispatchEvent(evt);
+                        break;
+                    }
+                }
+            }
+        });
+    }
+}
+
+const svg: SVG = new SVG();
+const helpPanel = new HelpPanel();
 const current: CursorPosition = new CursorPosition(0, 0);
 const old: CursorPosition = new CursorPosition(0, 0);
 let drawing: boolean = false;
@@ -163,7 +232,15 @@ document.addEventListener("keydown", function (e) {
             }
             case "g": {
                 svg.getImage();
+                break;
+            }
+            case "/": {
+                helpPanel.toggle();
+                break;
             }
         }
     }
 });
+
+document.body.appendChild(svg.root);
+document.body.appendChild(helpPanel.root);

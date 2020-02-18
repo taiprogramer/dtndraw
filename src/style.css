@@ -52,7 +52,7 @@ svg {
     visibility: hidden;
     position: fixed;
     bottom: 1em;
-    left: 13em;
+    left: 10em;
 }
 
 .b-help-panel li:hover .tooltip {

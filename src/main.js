@@ -44,8 +44,8 @@ var Line = /** @class */ (function () {
     return Line;
 }());
 var SVG = /** @class */ (function () {
-    function SVG(svg) {
-        this.root = svg;
+    function SVG() {
+        this.root = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     }
     SVG.prototype.draw = function (obj) {
         this.root.appendChild(obj.root);
@@ -97,7 +97,66 @@ var SVG = /** @class */ (function () {
     };
     return SVG;
 }());
-var svg = new SVG(document.getElementsByTagName("svg")[0]);
+var HelpPanel = /** @class */ (function () {
+    function HelpPanel() {
+        var _this = this;
+        this.root = document.createElement("ul");
+        this.shortcuts = new Array();
+        this.items = new Array();
+        this.root.classList.add("b-help-panel");
+        this.shortcuts.push({ name: "C", description: "Alt + c: Erase everything (Clear)" });
+        this.shortcuts.push({ name: "G", description: "Alt + g: Download image (Get)" });
+        this.shortcuts.push({ name: "/", description: "Alt + /: Toggle this help" });
+        this.shortcuts.forEach(function (shortcut) {
+            var li = document.createElement("li");
+            li.textContent = shortcut.name;
+            _this.items.push(li);
+            var div = document.createElement("div");
+            div.textContent = shortcut.description;
+            div.classList.add("tooltip");
+            li.appendChild(div);
+            _this.root.appendChild(li);
+            _this.addEventListenerForItems();
+        });
+    }
+    HelpPanel.prototype.toggle = function () {
+        var visibility = this.root.style.visibility;
+        console.log(visibility);
+        if (visibility === "visible" || visibility === "") {
+            this.root.style.visibility = "hidden";
+            return;
+        }
+        if (visibility === "hidden") {
+            this.root.style.visibility = "visible";
+        }
+    };
+    HelpPanel.prototype.addEventListenerForItems = function () {
+        this.items.forEach(function (item) {
+            item.onclick = function (e) {
+                switch (item.textContent.charAt(0)) {
+                    case "C": {
+                        var evt = new KeyboardEvent("keydown", { key: "c", altKey: true });
+                        document.dispatchEvent(evt);
+                        break;
+                    }
+                    case "G": {
+                        var evt = new KeyboardEvent("keydown", { key: "g", altKey: true });
+                        document.dispatchEvent(evt);
+                        break;
+                    }
+                    case "/": {
+                        var evt = new KeyboardEvent("keydown", { key: "/", altKey: true });
+                        document.dispatchEvent(evt);
+                        break;
+                    }
+                }
+            };
+        });
+    };
+    return HelpPanel;
+}());
+var svg = new SVG();
+var helpPanel = new HelpPanel();
 var current = new CursorPosition(0, 0);
 var old = new CursorPosition(0, 0);
 var drawing = false;
@@ -153,7 +212,14 @@ document.addEventListener("keydown", function (e) {
             }
             case "g": {
                 svg.getImage();
+                break;
+            }
+            case "/": {
+                helpPanel.toggle();
+                break;
             }
         }
     }
 });
+document.body.appendChild(svg.root);
+document.body.appendChild(helpPanel.root);
