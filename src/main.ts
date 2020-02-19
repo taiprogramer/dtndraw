@@ -67,7 +67,21 @@ class SVG {
             ctx.drawImage(image, 0, 0);
             const dataURL = canvas.toDataURL("image/png").replace("image/png", "octet-stream");
             const a = document.createElement("a");
-            a.setAttribute("download", "dtndraw.png");
+            const d = new Date();
+            // filename: dtndraw-ddmmyy-hhmmss.png
+            let downloadFileName: string = "dtndraw";
+            const date: number = d.getDate();
+            const month: number = d.getMonth() + 1; // because getMonth() start from 0
+            const year: number = d.getFullYear();
+            const hours: number = d.getHours();
+            const minutes: number = d.getMinutes();
+            const seconds: number = d.getSeconds();
+            downloadFileName += "-";
+            downloadFileName += date.toString().concat(month.toString()).concat(year.toString());
+            downloadFileName += "-";
+            downloadFileName += hours.toString().concat(minutes.toString()).concat(seconds.toString());
+            downloadFileName += ".png"
+            a.setAttribute("download", downloadFileName);
             a.setAttribute("href", dataURL);
             a.click();
         }

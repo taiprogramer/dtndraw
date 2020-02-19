@@ -72,7 +72,21 @@ var SVG = /** @class */ (function () {
             ctx.drawImage(image, 0, 0);
             var dataURL = canvas.toDataURL("image/png").replace("image/png", "octet-stream");
             var a = document.createElement("a");
-            a.setAttribute("download", "dtndraw.png");
+            var d = new Date();
+            // filename: dtndraw-ddmmyy-hhmmss.png
+            var downloadFileName = "dtndraw";
+            var date = d.getDate();
+            var month = d.getMonth() + 1; // because getMonth() start from 0
+            var year = d.getFullYear();
+            var hours = d.getHours();
+            var minutes = d.getMinutes();
+            var seconds = d.getSeconds();
+            downloadFileName += "-";
+            downloadFileName += date.toString().concat(month.toString()).concat(year.toString());
+            downloadFileName += "-";
+            downloadFileName += hours.toString().concat(minutes.toString()).concat(seconds.toString());
+            downloadFileName += ".png";
+            a.setAttribute("download", downloadFileName);
             a.setAttribute("href", dataURL);
             a.click();
         };
