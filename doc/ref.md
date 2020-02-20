@@ -10,3 +10,4 @@
 - [https://stackoverflow.com/questions/7927193/css-class-naming-convention](https://stackoverflow.com/questions/7927193/css-class-naming-convention)
 - [https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget](https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget)
 - [https://stackoverflow.com/questions/30734509/how-to-pass-optional-parameters-while-omitting-some-other-optional-parameters](https://stackoverflow.com/questions/30734509/how-to-pass-optional-parameters-while-omitting-some-other-optional-parameters)
+- [https://blog.bloomca.me/2017/12/15/how-to-push-folder-to-github-pages.html](https://blog.bloomca.me/2017/12/15/how-to-push-folder-to-github-pages.html)
