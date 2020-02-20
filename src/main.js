@@ -168,8 +168,16 @@ var HelpPanel = /** @class */ (function () {
     };
     return HelpPanel;
 }());
+var ColorPicker = /** @class */ (function () {
+    function ColorPicker() {
+        this.root = document.createElement("div");
+        this.root.classList.add("b-color-picker");
+    }
+    return ColorPicker;
+}());
 var svg = new SVG();
 var helpPanel = new HelpPanel();
+var colorPicker = new ColorPicker();
 var current = new CursorPosition(0, 0);
 var old = new CursorPosition(0, 0);
 var drawing = false;
@@ -236,3 +244,4 @@ document.addEventListener("keydown", function (e) {
 });
 document.body.appendChild(svg.root);
 document.body.appendChild(helpPanel.root);
+document.body.appendChild(colorPicker.root);

@@ -179,8 +179,21 @@ class HelpPanel {
     }
 }
 
+class ColorPicker {
+    root: HTMLDivElement;
+    backgroudColorPicker: HTMLInputElement;
+    foregroundColorPicker: HTMLInputElement;
+
+    constructor() {
+        this.root = document.createElement("div");
+        this.root.classList.add("b-color-picker");
+    }
+
+}
+
 const svg: SVG = new SVG();
 const helpPanel = new HelpPanel();
+const colorPicker: ColorPicker = new ColorPicker();
 const current: CursorPosition = new CursorPosition(0, 0);
 const old: CursorPosition = new CursorPosition(0, 0);
 let drawing: boolean = false;
@@ -257,3 +270,4 @@ document.addEventListener("keydown", function (e) {
 
 document.body.appendChild(svg.root);
 document.body.appendChild(helpPanel.root);
+document.body.appendChild(colorPicker.root);
