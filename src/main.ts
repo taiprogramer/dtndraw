@@ -10,7 +10,7 @@ class CursorPosition {
     set y(yValue: number) { this._y = yValue }
 }
 
-class Circle {
+class Circle implements Drawable {
     root: SVGElement;
     constructor(cx: number, cy: number, radius: number = 1, color: string = "#FFFFFF") {
         this.root = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -21,7 +21,7 @@ class Circle {
     }
 }
 
-class Line {
+class Line implements Drawable {
     root: SVGElement;
     constructor(x1: number, y1: number, x2: number, y2: number, width: number = 2, color: string = "#FFFFFF", ) {
         this.root = document.createElementNS('http://www.w3.org/2000/svg', 'line');
