@@ -59,7 +59,7 @@ class SVG {
         canvas.height = rect.height;
         const ctx = canvas.getContext("2d");
         ctx.rect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "black";
+        ctx.fillStyle = this.root.style.backgroundColor;
         ctx.fill();
         const image = new Image();
         image.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgXMLstr);
@@ -181,12 +181,41 @@ class HelpPanel {
 
 class ColorPicker {
     root: HTMLDivElement;
-    backgroudColorPicker: HTMLInputElement;
-    foregroundColorPicker: HTMLInputElement;
+    bgPicker: HTMLInputElement;
+    fgPicker: HTMLInputElement;
+    bgPickerFaceMask: HTMLDivElement;
+    fgPickerFaceMask: HTMLDivElement;
 
     constructor() {
         this.root = document.createElement("div");
         this.root.classList.add("b-color-picker");
+
+        this.bgPicker = document.createElement("input");
+        this.bgPicker.setAttribute("type", "color");
+        this.bgPicker.setAttribute("value", "#FFFF00");
+
+        this.fgPicker = document.createElement("input");
+        this.fgPicker.setAttribute("type", "color");
+        this.fgPicker.setAttribute("value", "#FF0000");
+
+        this.bgPickerFaceMask = document.createElement("div");
+        this.bgPickerFaceMask.setAttribute("id", "background-picker");
+        this.bgPickerFaceMask.onclick = () => { this.bgPicker.click(); }
+
+        this.fgPickerFaceMask = document.createElement("div");
+        this.fgPickerFaceMask.setAttribute("id", "foreground-picker");
+        this.fgPickerFaceMask.onclick = () => { this.fgPicker.click(); }
+
+        this.root.appendChild(this.bgPickerFaceMask);
+        this.root.appendChild(this.fgPickerFaceMask);
+    }
+
+    onBackgroundColorChanged(f: EventListener) {
+        this.bgPicker.onchange = f;
+    }
+
+    onForegroundColorChanged(f: EventListener) {
+        this.fgPicker.onchange = f;
     }
 
 }
@@ -267,6 +296,19 @@ document.addEventListener("keydown", function (e) {
         }
     }
 });
+
+// color picker onchange
+colorPicker.onBackgroundColorChanged((e: Event) => {
+    const bgPicker = e.target as HTMLInputElement;
+    svg.root.style.backgroundColor = bgPicker.value;
+    colorPicker.bgPickerFaceMask.style.backgroundColor = bgPicker.value;
+});
+
+colorPicker.onForegroundColorChanged((e: Event) => {
+    const fgPicker = e.target as HTMLInputElement;
+    colorPicker.fgPickerFaceMask.style.backgroundColor = fgPicker.value;
+});
+
 
 document.body.appendChild(svg.root);
 document.body.appendChild(helpPanel.root);

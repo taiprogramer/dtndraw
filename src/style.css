@@ -69,24 +69,22 @@ svg {
     height: 3em;
 }
 
-.b-color-picker::before {
-    content: '';
+.b-color-picker #foreground-picker {
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 50%;
     height: 100%;
-    background-color: #ffffff;
+    background-color: #ff0000;
 }
 
-.b-color-picker::after {
-    content: '';
+.b-color-picker #background-picker {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 50%;
     height: 100%;
-    background-color: #000000;
+    background-color: #FFFF00;
 }

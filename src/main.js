@@ -64,7 +64,7 @@ var SVG = /** @class */ (function () {
         canvas.height = rect.height;
         var ctx = canvas.getContext("2d");
         ctx.rect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "black";
+        ctx.fillStyle = this.root.style.backgroundColor;
         ctx.fill();
         var image = new Image();
         image.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgXMLstr);
@@ -170,9 +170,30 @@ var HelpPanel = /** @class */ (function () {
 }());
 var ColorPicker = /** @class */ (function () {
     function ColorPicker() {
+        var _this = this;
         this.root = document.createElement("div");
         this.root.classList.add("b-color-picker");
+        this.bgPicker = document.createElement("input");
+        this.bgPicker.setAttribute("type", "color");
+        this.bgPicker.setAttribute("value", "#FFFF00");
+        this.fgPicker = document.createElement("input");
+        this.fgPicker.setAttribute("type", "color");
+        this.fgPicker.setAttribute("value", "#FF0000");
+        this.bgPickerFaceMask = document.createElement("div");
+        this.bgPickerFaceMask.setAttribute("id", "background-picker");
+        this.bgPickerFaceMask.onclick = function () { _this.bgPicker.click(); };
+        this.fgPickerFaceMask = document.createElement("div");
+        this.fgPickerFaceMask.setAttribute("id", "foreground-picker");
+        this.fgPickerFaceMask.onclick = function () { _this.fgPicker.click(); };
+        this.root.appendChild(this.bgPickerFaceMask);
+        this.root.appendChild(this.fgPickerFaceMask);
     }
+    ColorPicker.prototype.onBackgroundColorChanged = function (f) {
+        this.bgPicker.onchange = f;
+    };
+    ColorPicker.prototype.onForegroundColorChanged = function (f) {
+        this.fgPicker.onchange = f;
+    };
     return ColorPicker;
 }());
 var svg = new SVG();
@@ -241,6 +262,16 @@ document.addEventListener("keydown", function (e) {
             }
         }
     }
+});
+// color picker onchange
+colorPicker.onBackgroundColorChanged(function (e) {
+    var bgPicker = e.target;
+    svg.root.style.backgroundColor = bgPicker.value;
+    colorPicker.bgPickerFaceMask.style.backgroundColor = bgPicker.value;
+});
+colorPicker.onForegroundColorChanged(function (e) {
+    var fgPicker = e.target;
+    colorPicker.fgPickerFaceMask.style.backgroundColor = fgPicker.value;
 });
 document.body.appendChild(svg.root);
 document.body.appendChild(helpPanel.root);
