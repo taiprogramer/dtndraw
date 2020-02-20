@@ -76,7 +76,6 @@ svg {
     bottom: 0;
     right: 50%;
     height: 100%;
-    background-color: #ff0000;
 }
 
 .b-color-picker #background-picker {
@@ -86,5 +85,4 @@ svg {
     bottom: 0;
     left: 50%;
     height: 100%;
-    background-color: #FFFF00;
 }

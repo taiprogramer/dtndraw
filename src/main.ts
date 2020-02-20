@@ -192,19 +192,21 @@ class ColorPicker {
 
         this.bgPicker = document.createElement("input");
         this.bgPicker.setAttribute("type", "color");
-        this.bgPicker.setAttribute("value", "#FFFF00");
+        this.bgPicker.setAttribute("value", "#000000");
 
         this.fgPicker = document.createElement("input");
         this.fgPicker.setAttribute("type", "color");
-        this.fgPicker.setAttribute("value", "#FF0000");
+        this.fgPicker.setAttribute("value", "#ffffff");
 
         this.bgPickerFaceMask = document.createElement("div");
         this.bgPickerFaceMask.setAttribute("id", "background-picker");
         this.bgPickerFaceMask.onclick = () => { this.bgPicker.click(); }
+        this.bgPickerFaceMask.style.backgroundColor = this.bgPicker.value;
 
         this.fgPickerFaceMask = document.createElement("div");
         this.fgPickerFaceMask.setAttribute("id", "foreground-picker");
         this.fgPickerFaceMask.onclick = () => { this.fgPicker.click(); }
+        this.fgPickerFaceMask.style.backgroundColor = this.fgPicker.value;
 
         this.root.appendChild(this.bgPickerFaceMask);
         this.root.appendChild(this.fgPickerFaceMask);
@@ -220,6 +222,7 @@ class ColorPicker {
 
 }
 
+let drawColor: string = "#ffffff";
 const svg: SVG = new SVG();
 const helpPanel = new HelpPanel();
 const colorPicker: ColorPicker = new ColorPicker();
@@ -233,7 +236,7 @@ svg.onTouchStart(
         drawing = true;
         current.x = e.touches[0].clientX;
         current.y = e.touches[0].clientY;
-        const circle: Circle = new Circle(current.x, current.y);
+        const circle: Circle = new Circle(current.x, current.y, undefined, drawColor);
         svg.draw(circle);
     }
 );
@@ -244,7 +247,7 @@ svg.onTouchMove(function (e: TouchEvent) {
         old.y = current.y;
         current.x = e.touches[0].clientX;
         current.y = e.touches[0].clientY;
-        const line = new Line(old.x, old.y, current.x, current.y);
+        const line = new Line(old.x, old.y, current.x, current.y, undefined, drawColor);
         svg.draw(line);
     }
 });
@@ -258,7 +261,7 @@ svg.onMouseDown(function (e: MouseEvent) {
     drawing = true;
     current.x = e.clientX;
     current.y = e.clientY;
-    const circle: Circle = new Circle(current.x, current.y);
+    const circle: Circle = new Circle(current.x, current.y, undefined, drawColor);
     svg.draw(circle);
 });
 
@@ -268,7 +271,7 @@ svg.onMouseMove(function (e: MouseEvent) {
         old.y = current.y;
         current.x = e.clientX;
         current.y = e.clientY;
-        const line = new Line(old.x, old.y, current.x, current.y);
+        const line = new Line(old.x, old.y, current.x, current.y, undefined, drawColor);
         svg.draw(line);
     }
 });
@@ -307,6 +310,7 @@ colorPicker.onBackgroundColorChanged((e: Event) => {
 colorPicker.onForegroundColorChanged((e: Event) => {
     const fgPicker = e.target as HTMLInputElement;
     colorPicker.fgPickerFaceMask.style.backgroundColor = fgPicker.value;
+    drawColor = fgPicker.value;
 });
 
 
