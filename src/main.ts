@@ -1,7 +1,17 @@
+// Interfaces
+// Interface::Drawable
 interface Drawable {
     root: SVGElement;
 }
 
+// Interface::Shortcut
+interface Shortcut {
+    name: string;
+    description: string;
+}
+
+// Classes
+// Class::CursorPosition
 class CursorPosition {
     constructor(private _x: number, private _y: number) { }
     get x() { return this._x }
@@ -10,6 +20,7 @@ class CursorPosition {
     set y(yValue: number) { this._y = yValue }
 }
 
+// Class::Circle
 class Circle implements Drawable {
     root: SVGElement;
     constructor(cx: number, cy: number, radius: number = 1, color: string = "#FFFFFF") {
@@ -21,6 +32,7 @@ class Circle implements Drawable {
     }
 }
 
+// Class::Line
 class Line implements Drawable {
     root: SVGElement;
     constructor(x1: number, y1: number, x2: number, y2: number, width: number = 2, color: string = "#FFFFFF", ) {
@@ -34,6 +46,7 @@ class Line implements Drawable {
     }
 }
 
+// Class::SVG
 class SVG {
     root: SVGElement;
     constructor() {
@@ -112,11 +125,7 @@ class SVG {
     }
 }
 
-interface Shortcut {
-    name: string;
-    description: string;
-}
-
+// Class::HelpPanel
 class HelpPanel {
     root: HTMLUListElement;
     shortcuts: Array<Shortcut>;
@@ -179,6 +188,7 @@ class HelpPanel {
     }
 }
 
+// Class::ColorPicker
 class ColorPicker {
     root: HTMLDivElement;
     bgPicker: HTMLInputElement;
@@ -222,6 +232,7 @@ class ColorPicker {
 
 }
 
+// Main
 let drawColor: string = "#ffffff";
 const svg: SVG = new SVG();
 const helpPanel = new HelpPanel();
