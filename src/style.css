@@ -62,7 +62,7 @@ svg {
 /* color picker */
 
 .b-color-picker {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
     width: 3em;
@@ -86,3 +86,4 @@ svg {
     left: 50%;
     height: 100%;
 }
+
