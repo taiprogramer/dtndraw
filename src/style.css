@@ -42,6 +42,10 @@ svg {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    /* Disable user-select */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ and Edge */
+    user-select: none; /* Standard syntax */
 }
 
 .b-help-panel li:hover {
