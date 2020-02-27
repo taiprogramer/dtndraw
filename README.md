@@ -3,5 +3,5 @@
 - Written in [VanilaJS](http://vanilla-js.com/).
 - Rewritten in [Typescript](https://www.typescriptlang.org/)
 - Url: [https://taiprogramer.github.io/dtndraw](https://taiprogramer.github.io/dtndraw)
-- Status: **Latest::v0.3.0**
+- Status: **Latest::v0.3.1**
 - Author: taiprogramer.
