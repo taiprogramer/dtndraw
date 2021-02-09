@@ -1,7 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 ./build.sh
-# serve project with http-server
-# root: dist/
-# port: 1975
-# no-cache
-http-server dist --port 1975 -c-1
+# serve project with thttpd
+# root: docs/
+PORT=1975
+# no-cache, no chroot
+thttpd -d docs -p $PORT -T utf-8 -M 1s
+echo "[thttpd: listening on port localhost:$PORT]"
+echo "To stop this service: killall thttpd."
+

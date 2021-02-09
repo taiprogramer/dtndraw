@@ -1,8 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 
-# create dist/ if no exist
-mkdir -p dist
-# copy all files in src/ to dist/
-cp -r src/. dist
-# compile .ts file in dist folder
-tsc -p dist
+rm -rf docs/
+mkdir docs
+# copy all files in src/ to docs/
+cp -r src/. docs
+# compile .ts file in docs folder
+tsc -p docs
+# remove unnecessary files
+rm -rf docs/*.ts docs/tsconfig.json
+echo '[build: success]'
