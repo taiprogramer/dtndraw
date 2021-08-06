@@ -1,43 +1,20 @@
-// Classes
-// Class::CursorPosition
-var CursorPosition = (function () {
-    function CursorPosition(_x, _y) {
-        this._x = _x;
-        this._y = _y;
-    }
-    Object.defineProperty(CursorPosition.prototype, "x", {
-        get: function () { return this._x; },
-        set: function (xValue) { this._x = xValue; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(CursorPosition.prototype, "y", {
-        get: function () { return this._y; },
-        set: function (yValue) { this._y = yValue; },
-        enumerable: true,
-        configurable: true
-    });
-    return CursorPosition;
-})();
-// Class::Circle
-var Circle = (function () {
+var Circle = /** @class */ (function () {
     function Circle(cx, cy, radius, color) {
         if (radius === void 0) { radius = 1; }
         if (color === void 0) { color = "#FFFFFF"; }
-        this.root = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        this.root = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         this.root.setAttribute("fill", color);
         this.root.setAttribute("r", radius.toString());
         this.root.setAttribute("cx", cx.toString());
         this.root.setAttribute("cy", cy.toString());
     }
     return Circle;
-})();
-// Class::Line
-var Line = (function () {
+}());
+var Line = /** @class */ (function () {
     function Line(x1, y1, x2, y2, width, color) {
         if (width === void 0) { width = 2; }
         if (color === void 0) { color = "#FFFFFF"; }
-        this.root = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        this.root = document.createElementNS("http://www.w3.org/2000/svg", "line");
         this.root.setAttribute("stroke", color);
         this.root.setAttribute("stroke-width", width.toString());
         this.root.setAttribute("x1", x1.toString());
@@ -46,11 +23,11 @@ var Line = (function () {
         this.root.setAttribute("y2", y2.toString());
     }
     return Line;
-})();
+}());
 // Class::SVG
-var SVG = (function () {
+var SVG = /** @class */ (function () {
     function SVG() {
-        this.root = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        this.root = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     }
     SVG.prototype.draw = function (obj) {
         this.root.appendChild(obj.root);
@@ -72,7 +49,8 @@ var SVG = (function () {
         ctx.fillStyle = this.root.style.backgroundColor;
         ctx.fill();
         var image = new Image();
-        image.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgXMLstr);
+        image.src = "data:image/svg+xml;charset=utf-8," +
+            encodeURIComponent(svgXMLstr);
         image.onload = function () {
             ctx.drawImage(image, 0, 0);
             var dataURL = canvas.toDataURL("image/png").replace("image/png", "octet-stream");
@@ -115,18 +93,26 @@ var SVG = (function () {
         this.root.addEventListener("mouseup", f);
     };
     return SVG;
-})();
-// Class::HelpPanel
-var HelpPanel = (function () {
+}());
+var HelpPanel = /** @class */ (function () {
     function HelpPanel() {
         var _this = this;
         this.root = document.createElement("ul");
         this.shortcuts = new Array();
         this.items = new Array();
         this.root.classList.add("b-help-panel");
-        this.shortcuts.push({ name: "C", description: "Alt + c: Erase everything (Clear)" });
-        this.shortcuts.push({ name: "G", description: "Alt + g: Download image (Get)" });
-        this.shortcuts.push({ name: "/", description: "Alt + /: Toggle this help" });
+        this.shortcuts.push({
+            name: "C",
+            description: "Alt + c: Erase everything (Clear)",
+        });
+        this.shortcuts.push({
+            name: "G",
+            description: "Alt + g: Download image (Get)",
+        });
+        this.shortcuts.push({
+            name: "/",
+            description: "Alt + /: Toggle this help",
+        });
         this.shortcuts.forEach(function (shortcut) {
             var li = document.createElement("li");
             li.textContent = shortcut.name;
@@ -154,17 +140,26 @@ var HelpPanel = (function () {
             item.onclick = function (e) {
                 switch (item.textContent.charAt(0)) {
                     case "C": {
-                        var evt = new KeyboardEvent("keydown", { key: "c", altKey: true });
+                        var evt = new KeyboardEvent("keydown", {
+                            key: "c",
+                            altKey: true,
+                        });
                         document.dispatchEvent(evt);
                         break;
                     }
                     case "G": {
-                        var evt = new KeyboardEvent("keydown", { key: "g", altKey: true });
+                        var evt = new KeyboardEvent("keydown", {
+                            key: "g",
+                            altKey: true,
+                        });
                         document.dispatchEvent(evt);
                         break;
                     }
                     case "/": {
-                        var evt = new KeyboardEvent("keydown", { key: "/", altKey: true });
+                        var evt = new KeyboardEvent("keydown", {
+                            key: "/",
+                            altKey: true,
+                        });
                         document.dispatchEvent(evt);
                         break;
                     }
@@ -173,9 +168,8 @@ var HelpPanel = (function () {
         });
     };
     return HelpPanel;
-})();
-// Class::ColorPicker
-var ColorPicker = (function () {
+}());
+var ColorPicker = /** @class */ (function () {
     function ColorPicker() {
         var _this = this;
         this.root = document.createElement("div");
@@ -188,11 +182,15 @@ var ColorPicker = (function () {
         this.fgPicker.setAttribute("value", "#ffffff");
         this.bgPickerFaceMask = document.createElement("div");
         this.bgPickerFaceMask.setAttribute("id", "background-picker");
-        this.bgPickerFaceMask.onclick = function () { _this.bgPicker.click(); };
+        this.bgPickerFaceMask.onclick = function () {
+            _this.bgPicker.click();
+        };
         this.bgPickerFaceMask.style.backgroundColor = this.bgPicker.value;
         this.fgPickerFaceMask = document.createElement("div");
         this.fgPickerFaceMask.setAttribute("id", "foreground-picker");
-        this.fgPickerFaceMask.onclick = function () { _this.fgPicker.click(); };
+        this.fgPickerFaceMask.onclick = function () {
+            _this.fgPicker.click();
+        };
         this.fgPickerFaceMask.style.backgroundColor = this.fgPicker.value;
         this.root.appendChild(this.bgPickerFaceMask);
         this.root.appendChild(this.fgPickerFaceMask);
@@ -204,14 +202,14 @@ var ColorPicker = (function () {
         this.fgPicker.onchange = f;
     };
     return ColorPicker;
-})();
+}());
 // Main
 var drawColor = "#ffffff";
 var svg = new SVG();
 var helpPanel = new HelpPanel();
 var colorPicker = new ColorPicker();
-var current = new CursorPosition(0, 0);
-var old = new CursorPosition(0, 0);
+var current = { x: 0, y: 0 };
+var old = { x: 0, y: 0 };
 var drawing = false;
 // Listen touch events of finger on mobile
 svg.onTouchStart(function (e) {
