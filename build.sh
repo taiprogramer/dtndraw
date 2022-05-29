@@ -1,11 +1,11 @@
 #!/bin/sh
 
-rm -rf docs/
-mkdir docs
+DIST=dist
+rm -rf $DIST/ && mkdir $DIST
 # copy all files in src/ to docs/
-cp -r src/. docs
+cp -r src/. $DIST
 # compile .ts file in docs folder
-tsc -p docs && echo '[build: success]'
+tsc -p $DIST && echo '[build: success]'
 # remove unnecessary files
-rm -rf docs/*.ts docs/tsconfig.json
+rm -rf $DIST/*.ts $DIST/tsconfig.json
 
