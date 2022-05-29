@@ -4,7 +4,6 @@
 - Rewritten in [Typescript](https://www.typescriptlang.org/)
 - Url:
   [https://taiprogramer.github.io/dtndraw](https://taiprogramer.github.io/dtndraw)
-- Status: **Latest::v0.3.2**
 - Author: taiprogramer.
 
 ## Build from source
@@ -21,4 +20,5 @@ yarn global add typescript
 chmod +x build.sh && ./build.sh
 ```
 
-Open `index.html` in **docs/** to enjoy.
+Open `index.html` in **dist/** to enjoy.
+
